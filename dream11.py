@@ -10,7 +10,6 @@
 # Allrounders that did not bowl (might not give many points)
 # MI - polard, h pandya
 
-# firstBatting batting first
 # 2 bow from secondBatting 1 bow from firstBatting
 # 2 all from secondBatting 1 all from firstBatting
 # 2 bat from secondBatting 2 bat from firstBatting
@@ -33,8 +32,6 @@
 
 
 import itertools
-
-teams = []
 
 batsmen_combinations_first_batting = []
 batsmen_combinations_second_batting = []
@@ -101,5 +98,4 @@ if __name__=='__main__':
         team.append(bowler_combinations[i % len(bowler_combinations)])
 
         printTeam(team, i)
-        teams.append(team)
     
