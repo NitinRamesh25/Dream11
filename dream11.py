@@ -12,7 +12,8 @@
 
 # 2 bow from secondBatting 1 bow from firstBatting
 # 2 all from secondBatting 1 all from firstBatting
-# 2 bat from secondBatting 2 bat from firstBatting
+# 2 bat from secondBatting 1 bat from firstBatting
+# 1 wkt keeper from firstbatting
 
 # TODO 
 # - point/credit system (max limit 100)
@@ -22,6 +23,7 @@
 #   If not at all possible, then compromise on bowler and keep original batsmen and try picking all rounders.
 #
 # - considering set of batsmen, allrounder and bowlers, the combination of sets might repeat
+#   swap second and first batting team
 # - what if more than 1 wkt keeper play from a team as a batsman
 #
 # - captian and vc pick for each team
@@ -33,7 +35,6 @@
 
 import itertools
 
-batsmen_combinations_first_batting = []
 batsmen_combinations_second_batting = []
 batsmen_combinations = []
 
@@ -43,15 +44,18 @@ allrounder_combinations = []
 bowler_combinations_second_batting = []
 bowler_combinations = []
 
-# order batsmen from least credits to most 
-# order bowler and allrounder from most credits to least
+# CSK vs MI
 # firstBatting = {'bat':['rohit','s yadav','s tiwari'], 'all':['h pandya','k pandya','pollard'], 'bow':['pattinson','r chahar','boult', 'bumrah']}
 # secondBatting = {'bat':['vijay','watson','du plesis','raydu'], 'all':['jadeja','s curran'], 'bow':['d chahar','chawla','nigidi']}
 
-firstBatting = {'bat':['','',''], 'all':['','',''], 'bow':['','','']}
-secondBatting = {'bat':['','',''], 'all':['','',''], 'bow':['','','']}
+# 3 x 4 should be max, a total of 12 combinations
+# Any list in second batting team must have 3 max
 
+# KingsXI vs DC
+firstBatting = {'bat':['dhawan','iyer','p shaw','hetmyer'], 'all':['a patel','m stoinis'], 'bow':['rabada','ashwin','nortje','m sharma']}
+secondBatting = {'bat':['m agarwal','k nair','s khan'], 'all':['maxwell','gowtham'], 'bow':['shami','jordan','cottrell']} # bishoni removed
 
+ 
 def allCombinations(players, pickCount):
     return list(itertools.combinations(players, pickCount))
 
@@ -70,9 +74,8 @@ def printTeam(team, index):
 
 if __name__=='__main__':
 
-    batsmen_combinations_first_batting = allCombinations(firstBatting['bat'], 2)
     batsmen_combinations_second_batting = allCombinations(secondBatting['bat'], 2)
-    batsmen_combinations = permuteTwoLists(batsmen_combinations_first_batting, batsmen_combinations_second_batting)
+    batsmen_combinations = permuteTwoLists(batsmen_combinations_second_batting, firstBatting['bat'])
 
     # print('{0} {1}'.format(len(batsmen_combinations), batsmen_combinations))
 
@@ -86,7 +89,7 @@ if __name__=='__main__':
 
     # print('{0} {1}'.format(len(bowler_combinations), bowler_combinations))
 
-    totalTeams = max([len(batsmen_combinations), len(allrounder_combinations), len(bowler_combinations)])
+    totalTeams = max(len(batsmen_combinations), len(allrounder_combinations), len(bowler_combinations))
 
     print('total teams = {0}'.format(totalTeams))
 
