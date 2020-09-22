@@ -10,10 +10,10 @@
 # Allrounders that did not bowl (might not give many points)
 # MI - polard, h pandya
 
-# 2 bow from secondBatting 1 bow from firstBatting
+# 2 bow from secondBatting 2 bow from firstBatting
 # 2 all from secondBatting 1 all from firstBatting
 # 2 bat from secondBatting 1 bat from firstBatting
-# 1 wkt keeper from firstbatting
+# 1 wkt keeper from either team
 
 # TODO 
 # - point/credit system (max limit 100)
@@ -31,31 +31,25 @@
 #   2 teams at the end can have c as wkt keeper
 #   pick c and vs for 6 teams for the actualy secondbatting team and 5 teams with the actual firstbatting team   
 
-
+# 3 x 4 should be max, a total of 12 combinations
+# Any list in second batting team must have 3 max
+# If you want two bowlers per dreamteam from first batting team, then club them in tuples of 2
+# and take only one tuple from the list for combinations
 
 import itertools
-
-batsmen_combinations_second_batting = []
-batsmen_combinations = []
-
-allrounder_combinations_second_batting = []
-allrounder_combinations = []
-
-bowler_combinations_second_batting = []
-bowler_combinations = []
 
 # CSK vs MI
 # firstBatting = {'bat':['rohit','s yadav','s tiwari'], 'all':['h pandya','k pandya','pollard'], 'bow':['pattinson','r chahar','boult', 'bumrah']}
 # secondBatting = {'bat':['vijay','watson','du plesis','raydu'], 'all':['jadeja','s curran'], 'bow':['d chahar','chawla','nigidi']}
 
-# 3 x 4 should be max, a total of 12 combinations
-# Any list in second batting team must have 3 max
-
 # KingsXI vs DC
-firstBatting = {'bat':['dhawan','iyer','p shaw','hetmyer'], 'all':['a patel','m stoinis'], 'bow':['rabada','ashwin','nortje','m sharma']}
-secondBatting = {'bat':['m agarwal','k nair','s khan'], 'all':['maxwell','gowtham'], 'bow':['shami','jordan','cottrell']} # bishoni removed
+# firstBatting = {'bat':['dhawan','iyer','p shaw','hetmyer'], 'all':['a patel','m stoinis'], 'bow':[('rabada','ashwin'),('nortje','m sharma')]}
+# secondBatting = {'bat':['m agarwal','k nair','s khan'], 'all':['maxwell','gowtham'], 'bow':['shami','jordan','cottrell']} # bishoni removed
 
- 
+firstBatting = {'bat':['','',''], 'all':['',''], 'bow':['','','']}
+secondBatting = {'bat':['','',''], 'all':['',''], 'bow':['','','']} 
+
+
 def allCombinations(players, pickCount):
     return list(itertools.combinations(players, pickCount))
 
@@ -65,8 +59,8 @@ def permuteTwoLists(list1, list2):
     return list(unique)
 
 
-def printTeam(team, index):
-    print('\nStart of team {0}\n'.format(index))
+def printTeam(team, teamNumber):
+    print('\nStart of team {0}\n'.format(teamNumber))
     for element in team:
         print(element)
     print('\nEnd of team\n')
@@ -74,18 +68,15 @@ def printTeam(team, index):
 
 if __name__=='__main__':
 
-    batsmen_combinations_second_batting = allCombinations(secondBatting['bat'], 2)
-    batsmen_combinations = permuteTwoLists(batsmen_combinations_second_batting, firstBatting['bat'])
+    batsmen_combinations = permuteTwoLists(allCombinations(secondBatting['bat'], 2), firstBatting['bat'])
 
     # print('{0} {1}'.format(len(batsmen_combinations), batsmen_combinations))
 
-    allrounder_combinations_second_batting = allCombinations(secondBatting['all'], 2)
-    allrounder_combinations = permuteTwoLists(allrounder_combinations_second_batting, firstBatting['all'])
+    allrounder_combinations = permuteTwoLists(allCombinations(secondBatting['all'], 2), firstBatting['all'])
 
     # print('{0} {1}'.format(len(allrounder_combinations), allrounder_combinations))
 
-    bowler_combinations_second_batting = allCombinations(secondBatting['bow'], 2)
-    bowler_combinations = permuteTwoLists(bowler_combinations_second_batting, firstBatting['bow'])
+    bowler_combinations = permuteTwoLists(allCombinations(secondBatting['bow'], 2), firstBatting['bow'])
 
     # print('{0} {1}'.format(len(bowler_combinations), bowler_combinations))
 
@@ -100,5 +91,5 @@ if __name__=='__main__':
         team.append(allrounder_combinations[i % len(allrounder_combinations)])
         team.append(bowler_combinations[i % len(bowler_combinations)])
 
-        printTeam(team, i)
+        printTeam(team, i+1)
     
